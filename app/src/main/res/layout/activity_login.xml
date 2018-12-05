@@ -25,6 +25,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="72dp"
+        android:text="demo@gmail.com"
         android:ems="10"
         android:hint="email"
         android:inputType="textEmailAddress"
@@ -38,6 +39,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="16dp"
+        android:text="password"
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
@@ -51,6 +53,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginLeft="56dp"
         android:layout_marginTop="40dp"
+        android:onClick="loginClick"
         android:text="Login"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
@@ -62,6 +65,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginLeft="56dp"
         android:layout_marginTop="16dp"
+        android:onClick="registerClick"
         android:text="Register"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
