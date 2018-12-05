@@ -1,5 +1,6 @@
 package com.example.marty.feed_me
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -36,7 +37,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            val intentMain = Intent(Intent.ACTION_MAIN)
+            intentMain.addCategory(Intent.CATEGORY_HOME)
+            intentMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intentMain)
         }
     }
 
