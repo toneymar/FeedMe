@@ -7,8 +7,9 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.widget.EditText
 import com.example.marty.feed_me.data.Recipe
+import kotlinx.android.synthetic.main.dialog_add.view.*
 
-class AddDialog : DialogFragment() {
+class Dialog : DialogFragment() {
 
     interface ItemHandler {
         fun itemCreated(item: Recipe)
@@ -35,7 +36,7 @@ class AddDialog : DialogFragment() {
         builder.setTitle("Find Recipe")
 
         val rootView = requireActivity().layoutInflater.inflate(R.layout.dialog_add, null)
-        cityName = rootView.etCity
+        cityName = rootView.etRecipe
         builder.setView(rootView)
 
         builder.setPositiveButton("Ok") {
