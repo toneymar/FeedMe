@@ -16,11 +16,17 @@ import java.util.*
 class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouchHelperAdapter {
 
     var recipes = mutableListOf<Recipe>()
+    val context : Context
+
     companion object {
         val KEY_RECIPE_NAME = "KEY_RECIPE_NAME"
     }
 
-    val context : Context
+    inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+        val tvRecipe = itemView.tvRecipe
+        val btnDelete = itemView.ivDelete
+    }
+
     constructor(context: Context, itemList: List<Recipe>) : super() {
         this.context = context
         this.recipes.addAll(itemList)  //the constructor now receives all items from database
@@ -73,11 +79,6 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
                 }
             }.start()
         }
-    }
-
-    inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        val tvRecipe = itemView.tvRecipe
-        val btnDelete = itemView.ivDelete
     }
 
     fun addRecipe(item: Recipe){

@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
@@ -16,6 +17,7 @@ import com.example.marty.feed_me.data.Recipe
 import com.example.marty.feed_me.touch.RecipeTouchHelperCallback
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecipeDialog.RecipeHandler {
 
@@ -42,7 +44,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Thread {
             val recipeList = AppDatabase.getInstance(this@MainActivity).recipeDao().findAllRecipes()
             recipeAdapter = RecipeAdapter(this@MainActivity, recipeList)
-            runOnUiThread {
+
+        runOnUiThread {
                 recyclerView.adapter = recipeAdapter
                 val callback = RecipeTouchHelperCallback(recipeAdapter)
                 val touchHelper = ItemTouchHelper(callback)
