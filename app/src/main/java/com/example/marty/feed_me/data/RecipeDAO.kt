@@ -6,7 +6,7 @@ import android.arch.persistence.room.*
 interface RecipeDAO {
 
     @Query("SELECT * FROM recipe")
-    fun findAllRecipies(): List<Recipe>
+    fun findAllRecipes(): List<Recipe>
 
     @Insert
     fun insertRecipe(item: Recipe) : Long

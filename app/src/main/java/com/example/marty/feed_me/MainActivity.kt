@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun initRecyclerView() {
         Thread {
-            val recipeList = AppDatabase.getInstance(this@MainActivity).recipeDao().findAllRecipies()
+            val recipeList = AppDatabase.getInstance(this@MainActivity).recipeDao().findAllRecipes()
             recipeAdapter = RecipeAdapter(this@MainActivity, recipeList)
             runOnUiThread {
                 recyclerView.adapter = recipeAdapter

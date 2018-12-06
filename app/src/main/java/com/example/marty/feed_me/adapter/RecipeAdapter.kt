@@ -15,7 +15,7 @@ import java.util.*
 
 class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouchHelperAdapter {
 
-    var recipies = mutableListOf<Recipe>()
+    var recipes = mutableListOf<Recipe>()
     companion object {
         val KEY_RECIPE_NAME = "KEY_RECIPE_NAME"
     }
@@ -23,7 +23,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
     val context : Context
     constructor(context: Context, itemList: List<Recipe>) : super() {
         this.context = context
-        this.recipies.addAll(itemList)  //the constructor now receives all items from database
+        this.recipes.addAll(itemList)  //the constructor now receives all items from database
     }
     constructor(context: Context) : super(){
         this.context = context
@@ -36,10 +36,10 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
         return ViewHolder(view)
     }
     override fun getItemCount(): Int {
-        return recipies.size
+        return recipes.size
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = recipies[position]
+        val item = recipes[position]
 
         holder.tvRecipe.text = item.recipeName
         holder.btnDelete.setOnClickListener{
@@ -52,8 +52,8 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
     private fun deleteRecipe(adapterPosition: Int) {
         Thread {
             AppDatabase.getInstance(
-                    context).recipeDao().deleteRecipe(recipies[adapterPosition])
-            recipies.removeAt(adapterPosition)
+                    context).recipeDao().deleteRecipe(recipes[adapterPosition])
+            recipes.removeAt(adapterPosition)
             (context as MainActivity).runOnUiThread {
                 notifyItemRemoved(adapterPosition)
             }
@@ -61,12 +61,12 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
     }
 
     fun deleteAll(){
-        if(recipies.isNotEmpty()){
+        if(recipes.isNotEmpty()){
             Thread{
-                for(i in 0..recipies.size){
+                for(i in 0..recipes.size){
                     AppDatabase.getInstance(
-                            context).recipeDao().deleteRecipe(recipies[i])
-                    recipies.removeAt(i)
+                            context).recipeDao().deleteRecipe(recipes[i])
+                    recipes.removeAt(i)
                     (context as MainActivity).runOnUiThread {
                         notifyItemRemoved(i)
                     }
@@ -81,7 +81,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
     }
 
     fun addRecipe(item: Recipe){
-        recipies.add(0, item)
+        recipes.add(0, item)
         notifyItemInserted(0)
     }
 
@@ -90,7 +90,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
         deleteAll()
     }
     override fun onItemMoved(fromPosition: Int, toPosition: Int) {
-        Collections.swap(recipies, fromPosition, toPosition)
+        Collections.swap(recipes, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
     }
 }

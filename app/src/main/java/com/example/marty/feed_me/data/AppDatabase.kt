@@ -15,7 +15,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             if (INSTANCE == null) {  //creates the instance if it doesn't exist
                 INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        AppDatabase::class.java, "recipies.db")
+                        AppDatabase::class.java, "recipes.db")
                         .build()
             }
             return INSTANCE!!
