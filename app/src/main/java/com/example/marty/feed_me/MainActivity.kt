@@ -15,6 +15,7 @@ import com.example.marty.feed_me.adapter.RecipeAdapter
 import com.example.marty.feed_me.data.AppDatabase
 import com.example.marty.feed_me.data.Recipe
 import com.example.marty.feed_me.touch.RecipeTouchHelperCallback
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -89,7 +90,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this@MainActivity, "ABOUT", Toast.LENGTH_LONG).show()
             }
             R.id.nav_logout -> {
-                Toast.makeText(this@MainActivity, "LOGOUT", Toast.LENGTH_LONG).show()
+                FirebaseAuth.getInstance().signOut()
+                finish()
             }
             R.id.nav_view -> {
                 Toast.makeText(this@MainActivity, "VIEW", Toast.LENGTH_LONG).show()
