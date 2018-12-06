@@ -23,6 +23,9 @@ import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecipeDialog.RecipeHandler {
 
+    private val HOST_URL = "https://www.food2fork.com/api/"
+
+
     private lateinit var recipeAdapter: RecipeAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
