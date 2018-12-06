@@ -12,4 +12,5 @@
     <string name="new_recipe">New Recipe</string>
     <string name="ok">OK</string>
     <string name="field_not_empty">This field can not be empty</string>
+    <string name="search_for_a_recipe">Search For A Recipe</string>
 </resources>

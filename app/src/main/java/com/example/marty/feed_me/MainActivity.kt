@@ -6,12 +6,10 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.example.marty.feed_me.R
 import com.example.marty.feed_me.adapter.RecipeAdapter
 import com.example.marty.feed_me.data.AppDatabase
 import com.example.marty.feed_me.data.Recipe
@@ -34,7 +32,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            showAddRecipeDialog()
+            Toast.makeText(this@MainActivity,
+                    "We'll implement the search function in a bit",
+                    Toast.LENGTH_LONG)
+                    .show()
+
+            //showAddRecipeDialog()
         }
         initRecyclerView()
 
@@ -95,18 +98,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_add_recipe -> {
-                showAddRecipeDialog()
+            R.id.nav_search_recipe -> {
+                Toast.makeText(this@MainActivity,
+                        "We'll implement the search function in a bit",
+                        Toast.LENGTH_LONG)
+                        .show()
+
+                //showAddRecipeDialog()
             }
             R.id.nav_fav -> {
-                Toast.makeText(this@MainActivity, "FAVES", Toast.LENGTH_LONG).show()
+                startActivity(Intent(this@MainActivity, FavoritesActivity::class.java))
+                //Probably need to put extra here
             }
             R.id.nav_about -> {
-                Toast.makeText(this@MainActivity, "ABOUT", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity,
+                        "Authors: Pratik Karki, Huseyin Altinisik, Marty Toney",
+                        Toast.LENGTH_LONG).show()
             }
             R.id.nav_logout -> {
                 FirebaseAuth.getInstance().signOut()
-                finish()
+                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
             }
             R.id.nav_view -> {
                 Toast.makeText(this@MainActivity, "VIEW", Toast.LENGTH_LONG).show()
@@ -115,6 +126,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
+
     override fun recipeCreated(recipe: Recipe) {
         Thread {
             val recipeId = AppDatabase.getInstance(
