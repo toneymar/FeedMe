@@ -71,21 +71,6 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
         notifyDataSetChanged()
     }
 
-/*    fun deleteAll(){
-        if(recipes.isNotEmpty()){
-            Thread{
-                for(i in 0..recipes.size){
-                    AppDatabase.getInstance(
-                            context).recipeDao().deleteRecipe(recipes[i])
-                    recipes.removeAt(i)
-                    (context as MainActivity).runOnUiThread {
-                        notifyItemRemoved(i)
-                    }
-                }
-            }.start()
-        }
-    }*/
-
     fun addRecipe(item: Recipe){
         recipes.add(0, item)
         notifyItemInserted(0)
