@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecipeDialog.RecipeHandler {
 
     private val HOST_URL = "https://www.food2fork.com/api/"
+    // API KEY: 64b4b6087380614360a164f1fc132f28
 
 
     private lateinit var recipeAdapter: RecipeAdapter
