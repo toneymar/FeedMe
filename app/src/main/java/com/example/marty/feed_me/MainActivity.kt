@@ -11,6 +11,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.example.marty.feed_me.R
 import com.example.marty.feed_me.adapter.RecipeAdapter
 import com.example.marty.feed_me.data.AppDatabase
 import com.example.marty.feed_me.data.Recipe
@@ -75,14 +76,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_clear -> return true
-            else -> return super.onOptionsItemSelected(item)
+            R.id.action_clear -> {
+                Thread {
+                    AppDatabase.getInstance(this@MainActivity).recipeDao().deleteAll()
+                    runOnUiThread {
+                        recipeAdapter.deleteAll()
+                    }
+                }.start()
+            }
         }
+        return true
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
+            R.id.nav_add_recipe -> {
+                showAddRecipeDialog()
+            }
             R.id.nav_fav -> {
                 Toast.makeText(this@MainActivity, "FAVES", Toast.LENGTH_LONG).show()
             }

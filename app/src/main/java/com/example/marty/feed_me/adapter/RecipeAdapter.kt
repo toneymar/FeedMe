@@ -66,7 +66,12 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
         }.start()
     }
 
-    fun deleteAll(){
+    fun deleteAll() {
+        recipes.clear()
+        notifyDataSetChanged()
+    }
+
+/*    fun deleteAll(){
         if(recipes.isNotEmpty()){
             Thread{
                 for(i in 0..recipes.size){
@@ -79,7 +84,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
                 }
             }.start()
         }
-    }
+    }*/
 
     fun addRecipe(item: Recipe){
         recipes.add(0, item)
