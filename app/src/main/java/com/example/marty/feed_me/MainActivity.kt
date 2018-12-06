@@ -2,28 +2,33 @@ package com.example.marty.feed_me
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.example.marty.feed_me.adapter.RecipeAdapter
+import com.example.marty.feed_me.data.AppDatabase
+import com.example.marty.feed_me.data.Recipe
+import com.example.marty.feed_me.touch.RecipeTouchHelperCallback
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecipeDialog.RecipeHandler {
 
+    private lateinit var recipeAdapter: RecipeAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Toast.makeText(this@MainActivity, "Opening dialog", Toast.LENGTH_LONG)
-                    .show()
+            showAddRecipeDialog()
         }
+        initRecyclerView()
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -31,6 +36,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+    }
+
+    private fun initRecyclerView() {
+        Thread {
+            val recipeList = AppDatabase.getInstance(this@MainActivity).recipeDao().findAllRecipies()
+            recipeAdapter = RecipeAdapter(this@MainActivity, recipeList)
+            runOnUiThread {
+                recyclerView.adapter = recipeAdapter
+                val callback = RecipeTouchHelperCallback(recipeAdapter)
+                val touchHelper = ItemTouchHelper(callback)
+                touchHelper.attachToRecyclerView(recyclerView)
+            }
+        }.start()
     }
 
     override fun onBackPressed() {
@@ -43,17 +61,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(intentMain)
         }
     }
-
+    private fun showAddRecipeDialog(){
+        RecipeDialog().show(supportFragmentManager, "TAG_CREATE")
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_clear -> return true
             else -> return super.onOptionsItemSelected(item)
@@ -63,10 +79,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            //TODO
+            R.id.nav_fav -> {
+                Toast.makeText(this@MainActivity, "FAVES", Toast.LENGTH_LONG).show()
+            }
+            R.id.nav_about -> {
+                Toast.makeText(this@MainActivity, "ABOUT", Toast.LENGTH_LONG).show()
+            }
+            R.id.nav_logout -> {
+                Toast.makeText(this@MainActivity, "LOGOUT", Toast.LENGTH_LONG).show()
+            }
+            R.id.nav_view -> {
+                Toast.makeText(this@MainActivity, "VIEW", Toast.LENGTH_LONG).show()
+            }
         }
-
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+    override fun recipeCreated(recipe: Recipe) {
+        Thread {
+            val recipeId = AppDatabase.getInstance(
+                    this@MainActivity).recipeDao().insertRecipe(recipe)
+            recipe.recipeId = recipeId
+            runOnUiThread{
+                recipeAdapter.addRecipe(recipe)
+            }
+        }.start()
     }
 }

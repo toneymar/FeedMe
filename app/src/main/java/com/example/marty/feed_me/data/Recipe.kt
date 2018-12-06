@@ -6,8 +6,8 @@ import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 
 
-@Entity(tableName = "recipes")
+@Entity(tableName = "recipe")
 data class Recipe(
         @PrimaryKey(autoGenerate = true) var recipeId: Long?,
-        @ColumnInfo(name = "recipe name") var recipeName: String
+        @ColumnInfo(name = "recipename") var recipeName: String
 ) : Serializable
