@@ -10,18 +10,32 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.marty.feed_me.adapter.RecipeAdapter
 import com.example.marty.feed_me.data.AppDatabase
 import com.example.marty.feed_me.data.Recipe
+import com.example.marty.feed_me.data.RecipeResult
+import com.example.marty.feed_me.network.RecipeAPI
 import com.example.marty.feed_me.touch.RecipeTouchHelperCallback
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecipeDialog.RecipeHandler {
 
     private val HOST_URL = "https://www.food2fork.com/api/"
+
+
+    //Test array to see how the adapter works
+    private var searchResults = mutableListOf<String>()
+
+
     // API KEY: 64b4b6087380614360a164f1fc132f28
 
 
@@ -47,6 +61,43 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        // Testing out the API call with this function
+        showSearchResults("chicken")
+    }
+
+    private fun showSearchResults(recipe: String) {
+        val retrofit = Retrofit.Builder()
+                .baseUrl(HOST_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+        val recipeAPI = retrofit.create(RecipeAPI::class.java)
+        val recipeCall =
+                recipeAPI.getRecipe(
+                        "64b4b6087380614360a164f1fc132f28",
+                        recipe, 1
+                )
+
+        recipeCall.enqueue(object : Callback<RecipeResult> {
+
+            override fun onFailure(call: Call<RecipeResult>, t: Throwable) {
+                //imIcon.setImageResource(R.drawable.error)
+                //tvCityName.text = getString(R.string.cannot_connect)
+
+            }
+
+            override fun onResponse(call: Call<RecipeResult>, response: Response<RecipeResult>) {
+                val recipeResult = response.body()
+
+
+                for(r in recipeResult?.recipes!!){
+                    tvAPItest.append(r.title + "\n")
+                }
+            }
+
+        })
+
     }
 
     private fun initRecyclerView() {
@@ -54,7 +105,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val recipeList = AppDatabase.getInstance(this@MainActivity).recipeDao().findAllRecipes()
             recipeAdapter = RecipeAdapter(this@MainActivity, recipeList)
 
-        runOnUiThread {
+            runOnUiThread {
                 recyclerView.adapter = recipeAdapter
                 val callback = RecipeTouchHelperCallback(recipeAdapter)
                 val touchHelper = ItemTouchHelper(callback)
@@ -73,9 +124,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(intentMain)
         }
     }
-    private fun showAddRecipeDialog(){
+
+    private fun showAddRecipeDialog() {
         RecipeDialog().show(supportFragmentManager, "TAG_CREATE")
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
@@ -132,7 +185,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val recipeId = AppDatabase.getInstance(
                     this@MainActivity).recipeDao().insertRecipe(recipe)
             recipe.recipeId = recipeId
-            runOnUiThread{
+            runOnUiThread {
                 recipeAdapter.addRecipe(recipe)
             }
         }.start()

@@ -10,10 +10,17 @@
     tools:showIn="@layout/app_bar_main"
     android:background="@drawable/side_nav_bar">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/tvAPItest"/>
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tvAPItest"/>
+        
+    </ScrollView>
+
 
     <android.support.v7.widget.RecyclerView
         android:visibility="gone"
