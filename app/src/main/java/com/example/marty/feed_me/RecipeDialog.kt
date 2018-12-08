@@ -14,7 +14,6 @@ class RecipeDialog : DialogFragment() {
 
     interface RecipeHandler {
         fun recipeCreated(recipe: Recipe)
-        /*fun recipeUpdated(recipe: Recipe)*/
     }
     private lateinit var recipeHandler: RecipeHandler
 
