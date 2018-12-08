@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     //Test array to see how the adapter works
     var searchResults = mutableListOf<String?>()
-    var searchResults1 = mutableListOf<String?>()
 
     private val HOST_URL = "https://www.food2fork.com/api/"
     // API KEY: 64b4b6087380614360a164f1fc132f28

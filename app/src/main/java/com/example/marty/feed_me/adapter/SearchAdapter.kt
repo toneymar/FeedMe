@@ -20,7 +20,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val tvRecipe = itemView.tvRecipe
-        val btnDelete = itemView.ivDelete
     }
 
     constructor(context: Context, itemList: MutableList<String?>) : super() {
@@ -46,10 +45,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
 
         holder.tvRecipe.text = item
 
-/*        holder.btnDelete.setOnClickListener{
-            deleteRecipe(holder.adapterPosition)
-        }*/
-
         holder.itemView.setOnClickListener{
             Toast.makeText(context,
                     "Clicking on this should open up web page with the recipe. Need to Implement",
@@ -59,25 +54,10 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
             //TODO: implement url feature
         }
     }
-/*    private fun deleteRecipe(adapterPosition: Int) {
-        Thread {
-            AppDatabase.getInstance(
-                    context).recipeDao().deleteRecipe(recipes[adapterPosition])
-            recipes.removeAt(adapterPosition)
-            (context as MainActivity).runOnUiThread {
-                notifyItemRemoved(adapterPosition)
-            }
-        }.start()
-    }*/
 
     fun deleteAll() {
         recipes.clear()
         notifyDataSetChanged()
-    }
-
-    fun addRecipe(item: String){
-        recipes.add(0, item)
-        notifyItemInserted(0)
     }
 }
 

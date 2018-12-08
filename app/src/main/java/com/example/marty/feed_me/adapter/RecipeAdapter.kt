@@ -25,7 +25,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val tvRecipe = itemView.tvRecipe
-        val btnDelete = itemView.ivDelete
+        val btnDelete = itemView.ivPreview
     }
 
     constructor(context: Context, itemList: List<Recipe>) : super() {
