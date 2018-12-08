@@ -27,18 +27,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecipeDialog.RecipeHandler {
 
-    companion object {
-        var SEARCH_ITEM = ""
-    }
-
     //Test array to see how the adapter works
     var searchResults = mutableListOf<String?>()
     var searchResults1 = mutableListOf<String?>()
 
     private val HOST_URL = "https://www.food2fork.com/api/"
     // API KEY: 64b4b6087380614360a164f1fc132f28
-
-
 
     private lateinit var searchAdapter: SearchAdapter
 
@@ -80,17 +74,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recipeCall.enqueue(object : Callback<RecipeResult> {
 
             override fun onFailure(call: Call<RecipeResult>, t: Throwable) {
-                //imIcon.setImageResource(R.drawable.error)
-                //tvCityName.text = getString(R.string.cannot_connect)
-
                 Toast.makeText(this@MainActivity, "Error: ${t.message}", Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(call: Call<RecipeResult>, response: Response<RecipeResult>) {
-                Toast.makeText(this@MainActivity, "Connected", Toast.LENGTH_LONG).show()
                 val recipeResult = response.body()
 
-                searchResults.clear()
+                searchAdapter.deleteAll()
 
                 for(r in recipeResult?.recipes!!){
                     searchResults.add(r.title)
@@ -102,10 +92,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun initRecyclerView() {
+    fun initRecyclerView(searchItem : String) {
         Thread {
 
-            showSearchResults(SEARCH_ITEM)
+            showSearchResults(searchItem)
 
             searchAdapter = SearchAdapter(this@MainActivity, searchResults)
 
@@ -128,7 +118,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showSearchRecipeDialog() {
         RecipeDialog().show(supportFragmentManager, "TAG_CREATE")
-        initRecyclerView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -179,13 +168,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun recipeCreated(recipe: Recipe) {
-/*        Thread {
-            val recipeId = AppDatabase.getInstance(
-                    this@MainActivity).recipeDao().insertRecipe(recipe)
-            recipe.recipeId = recipeId
-            runOnUiThread {
-                searchAdapter.addRecipe(recipe)
-            }
-        }.start()*/
+
     }
 }
