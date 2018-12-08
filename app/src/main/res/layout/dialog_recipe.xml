@@ -7,6 +7,8 @@
 
     <EditText
         android:id="@+id/etRecipeText"
+        android:textColor="@color/Cream"
+        android:textColorHint="@color/Cream"
         android:hint="@string/search_for_a_recipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

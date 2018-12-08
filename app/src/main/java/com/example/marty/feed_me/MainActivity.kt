@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 searchAdapter.deleteAll()
 
                 for(r in recipeResult?.recipes!!){
-                    searchResults.add(r.title, r.image_url, r.source_url)
+                    searchResults.add(SearchItem(r.title, r.image_url, r.source_url))
                 }
 
             }
@@ -172,6 +172,3 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 }
 
-private fun <E> MutableList<E>.add(title: String?, image_url: String?, source_url: String?) {
-
-}

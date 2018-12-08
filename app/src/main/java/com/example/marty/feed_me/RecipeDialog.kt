@@ -15,6 +15,14 @@ class RecipeDialog : DialogFragment() {
     interface RecipeHandler {
         fun recipeCreated(recipe: Recipe)
     }
+
+    override fun onStart() {
+        super.onStart()
+
+        val window = dialog.window
+        window.setBackgroundDrawableResource(R.drawable.side_nav_bar)
+    }
+
     private lateinit var recipeHandler: RecipeHandler
 
     override fun onAttach(context: Context?) {

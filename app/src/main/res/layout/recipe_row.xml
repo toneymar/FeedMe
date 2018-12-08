@@ -7,7 +7,7 @@
     android:layout_height="120dp"
     android:id="@+id/card_view"
     android:layout_margin="10dp"
-    card_view:cardBackgroundColor="@color/Gold"
+    card_view:cardBackgroundColor="#FFFFFF"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="4dp"
     >
@@ -42,7 +42,7 @@
             android:layout_marginBottom="8dp"
             android:text="TextView"
             android:textAlignment="center"
-            android:textColor="@color/Cream"
+            android:textColor="@color/Gold"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

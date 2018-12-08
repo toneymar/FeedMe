@@ -1,33 +1,40 @@
 package com.example.marty.feed_me.adapter
 
+import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
+import android.provider.Settings.Global.getString
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.marty.feed_me.R
 import com.example.marty.feed_me.data.SearchItem
 import kotlinx.android.synthetic.main.recipe_row.view.*
 
-class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
+class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
     var recipes = mutableListOf<SearchItem?>()
-    val context : Context
+    val context: Context
 
     companion object {
         val KEY_RECIPE_NAME = "KEY_RECIPE_NAME"
     }
 
-    inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvRecipe = itemView.tvRecipe
+        val ivPreview = itemView.ivPreview
     }
 
     constructor(context: Context, itemList: MutableList<SearchItem?>) : super() {
         this.context = context
         this.recipes = itemList  //the constructor now receives all items from database
     }
-    constructor(context: Context) : super(){
+
+    constructor(context: Context) : super() {
         this.context = context
     }
 
@@ -37,6 +44,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
         )
         return ViewHolder(view)
     }
+
     override fun getItemCount(): Int {
         return recipes.size
     }
@@ -45,15 +53,19 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
         val item = recipes[position]
 
         holder.tvRecipe.text = item?.title
+        Glide.with(context)
+                .load(item?.picURL)
+                .into(holder.ivPreview)
 
-        holder.itemView.setOnClickListener{
-            Toast.makeText(context,
-                    "Clicking on this should open up web page with the recipe. Need to Implement",
-                    Toast.LENGTH_LONG)
-                    .show()
-
-            //TODO: implement url feature
+        holder.itemView.setOnClickListener {
+            intentOpenURL(item?.webURL)
         }
+    }
+
+    private fun intentOpenURL(webURL: String?) {
+        val intentSearch = Intent(Intent.ACTION_WEB_SEARCH)
+        intentSearch.putExtra(SearchManager.QUERY, webURL)
+        context.startActivity(intentSearch)
     }
 
     fun deleteAll() {
