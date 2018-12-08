@@ -86,3 +86,4 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
         notifyItemMoved(fromPosition, toPosition)
     }
 }
+

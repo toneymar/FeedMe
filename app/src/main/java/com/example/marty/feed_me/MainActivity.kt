@@ -6,17 +6,15 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.example.marty.feed_me.adapter.RecipeAdapter
 import com.example.marty.feed_me.adapter.SearchAdapter
 import com.example.marty.feed_me.data.AppDatabase
 import com.example.marty.feed_me.data.Recipe
 import com.example.marty.feed_me.data.RecipeResult
 import com.example.marty.feed_me.network.RecipeAPI
-import com.example.marty.feed_me.touch.RecipeTouchHelperCallback
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -29,14 +27,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecipeDialog.RecipeHandler {
 
-    private val HOST_URL = "https://www.food2fork.com/api/"
-
+    companion object {
+        var SEARCH_ITEM = ""
+    }
 
     //Test array to see how the adapter works
-    private var searchResults = mutableListOf<String>()
+    var searchResults = mutableListOf<String?>()
+    var searchResults1 = mutableListOf<String?>()
 
-
+    private val HOST_URL = "https://www.food2fork.com/api/"
     // API KEY: 64b4b6087380614360a164f1fc132f28
+
+
+
     private lateinit var searchAdapter: SearchAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,11 +47,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        //SEARCH_ITEM = "chicken"
+
         fab.setOnClickListener { view ->
             showSearchRecipeDialog()
         }
-
-        initRecyclerView()
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -80,15 +83,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 //imIcon.setImageResource(R.drawable.error)
                 //tvCityName.text = getString(R.string.cannot_connect)
 
+                Toast.makeText(this@MainActivity, "Error: ${t.message}", Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(call: Call<RecipeResult>, response: Response<RecipeResult>) {
+                Toast.makeText(this@MainActivity, "Connected", Toast.LENGTH_LONG).show()
                 val recipeResult = response.body()
 
-
                 for(r in recipeResult?.recipes!!){
-                    tvAPItest.append(r.title + "\n")
+                    searchResults.add(r.title)
                 }
+
             }
 
         })
@@ -97,8 +102,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun initRecyclerView() {
         Thread {
-            val recipeList = AppDatabase.getInstance(this@MainActivity).recipeDao().findAllRecipes()
-            searchAdapter = SearchAdapter(this@MainActivity, recipeList)
+
+            showSearchResults(SEARCH_ITEM)
+
+            searchAdapter = SearchAdapter(this@MainActivity, searchResults)
 
             runOnUiThread {
                 recyclerView.adapter = searchAdapter
@@ -119,6 +126,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showSearchRecipeDialog() {
         RecipeDialog().show(supportFragmentManager, "TAG_CREATE")
+        initRecyclerView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -169,13 +177,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun recipeCreated(recipe: Recipe) {
-        Thread {
+/*        Thread {
             val recipeId = AppDatabase.getInstance(
                     this@MainActivity).recipeDao().insertRecipe(recipe)
             recipe.recipeId = recipeId
             runOnUiThread {
                 searchAdapter.addRecipe(recipe)
             }
-        }.start()
+        }.start()*/
     }
 }

@@ -59,11 +59,12 @@ class RecipeDialog : DialogFragment() {
         }
     }
     private fun handleRecipeCreate() {
-        recipeHandler.recipeCreated(
+        MainActivity.SEARCH_ITEM = etRecipeText.text.toString()
+/*        recipeHandler.recipeCreated(
                 Recipe(
                         null,
                         etRecipeText.text.toString().capitalize()
                 )
-        )
+        )*/
     }
 }

@@ -1,23 +1,17 @@
 package com.example.marty.feed_me.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.marty.feed_me.MainActivity
 import com.example.marty.feed_me.R
-import com.example.marty.feed_me.data.AppDatabase
-import com.example.marty.feed_me.data.Recipe
-import com.example.marty.feed_me.touch.RecipeTouchHelperAdapter
 import kotlinx.android.synthetic.main.recipe_row.view.*
-import java.util.*
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
 
-    var recipes = mutableListOf<Recipe>()
+    var recipes = mutableListOf<String?>()
     val context : Context
 
     companion object {
@@ -29,9 +23,9 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
         val btnDelete = itemView.ivDelete
     }
 
-    constructor(context: Context, itemList: List<Recipe>) : super() {
+    constructor(context: Context, itemList: MutableList<String?>) : super() {
         this.context = context
-        this.recipes.addAll(itemList)  //the constructor now receives all items from database
+        this.recipes = itemList  //the constructor now receives all items from database
     }
     constructor(context: Context) : super(){
         this.context = context
@@ -50,23 +44,22 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = recipes[position]
 
-        holder.tvRecipe.text = item.recipeName
+        holder.tvRecipe.text = item
+
+/*        holder.btnDelete.setOnClickListener{
+            deleteRecipe(holder.adapterPosition)
+        }*/
 
         holder.itemView.setOnClickListener{
             Toast.makeText(context,
                     "Clicking on this should open up web page with the recipe. Need to Implement",
                     Toast.LENGTH_LONG)
                     .show()
-        }
 
-        holder.btnDelete.setOnClickListener{
-            deleteRecipe(holder.adapterPosition)
-        }
-        holder.itemView.setOnClickListener{
-
+            //TODO: implement url feature
         }
     }
-    private fun deleteRecipe(adapterPosition: Int) {
+/*    private fun deleteRecipe(adapterPosition: Int) {
         Thread {
             AppDatabase.getInstance(
                     context).recipeDao().deleteRecipe(recipes[adapterPosition])
@@ -75,15 +68,17 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
                 notifyItemRemoved(adapterPosition)
             }
         }.start()
-    }
+    }*/
 
     fun deleteAll() {
         recipes.clear()
         notifyDataSetChanged()
     }
 
-    fun addRecipe(item: Recipe){
+    fun addRecipe(item: String){
         recipes.add(0, item)
         notifyItemInserted(0)
     }
 }
+
+
