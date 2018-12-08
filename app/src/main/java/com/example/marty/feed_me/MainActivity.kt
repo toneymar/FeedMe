@@ -45,13 +45,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Toast.makeText(this@MainActivity,
-                    "We'll implement the search function in a bit",
-                    Toast.LENGTH_LONG)
-                    .show()
-
             showSearchRecipeDialog()
         }
+
         initRecyclerView()
 
         val toggle = ActionBarDrawerToggle(
@@ -106,9 +102,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             runOnUiThread {
                 recyclerView.adapter = searchAdapter
-                //val callback = RecipeTouchHelperCallback(searchAdapter)
-                //val touchHelper = ItemTouchHelper(callback)
-                //touchHelper.attachToRecyclerView(recyclerView)
             }
         }.start()
     }

@@ -1,10 +1,12 @@
 package com.example.marty.feed_me.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.marty.feed_me.MainActivity
 import com.example.marty.feed_me.R
 import com.example.marty.feed_me.data.AppDatabase
@@ -49,6 +51,14 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
         val item = recipes[position]
 
         holder.tvRecipe.text = item.recipeName
+
+        holder.itemView.setOnClickListener{
+            Toast.makeText(context,
+                    "Clicking on this should open up web page with the recipe. Need to Implement",
+                    Toast.LENGTH_LONG)
+                    .show()
+        }
+
         holder.btnDelete.setOnClickListener{
             deleteRecipe(holder.adapterPosition)
         }
