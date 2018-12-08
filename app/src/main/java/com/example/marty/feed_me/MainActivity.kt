@@ -10,8 +10,8 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.example.marty.feed_me.adapter.RecipeAdapter
+import com.example.marty.feed_me.adapter.SearchAdapter
 import com.example.marty.feed_me.data.AppDatabase
 import com.example.marty.feed_me.data.Recipe
 import com.example.marty.feed_me.data.RecipeResult
@@ -37,9 +37,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     // API KEY: 64b4b6087380614360a164f1fc132f28
+    private lateinit var searchAdapter: SearchAdapter
 
-
-    private lateinit var recipeAdapter: RecipeAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -51,7 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     Toast.LENGTH_LONG)
                     .show()
 
-            //showAddRecipeDialog()
+            showSearchRecipeDialog()
         }
         initRecyclerView()
 
@@ -63,7 +62,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         // Testing out the API call with this function
-        showSearchResults("chicken")
+        //showSearchResults("chicken")
     }
 
     private fun showSearchResults(recipe: String) {
@@ -103,13 +102,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun initRecyclerView() {
         Thread {
             val recipeList = AppDatabase.getInstance(this@MainActivity).recipeDao().findAllRecipes()
-            recipeAdapter = RecipeAdapter(this@MainActivity, recipeList)
+            searchAdapter = SearchAdapter(this@MainActivity, recipeList)
 
             runOnUiThread {
-                recyclerView.adapter = recipeAdapter
-                val callback = RecipeTouchHelperCallback(recipeAdapter)
-                val touchHelper = ItemTouchHelper(callback)
-                touchHelper.attachToRecyclerView(recyclerView)
+                recyclerView.adapter = searchAdapter
+                //val callback = RecipeTouchHelperCallback(searchAdapter)
+                //val touchHelper = ItemTouchHelper(callback)
+                //touchHelper.attachToRecyclerView(recyclerView)
             }
         }.start()
     }
@@ -125,7 +124,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun showAddRecipeDialog() {
+    private fun showSearchRecipeDialog() {
         RecipeDialog().show(supportFragmentManager, "TAG_CREATE")
     }
 
@@ -140,7 +139,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Thread {
                     AppDatabase.getInstance(this@MainActivity).recipeDao().deleteAll()
                     runOnUiThread {
-                        recipeAdapter.deleteAll()
+                        searchAdapter.deleteAll()
                     }
                 }.start()
             }
@@ -152,12 +151,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_search_recipe -> {
-                Toast.makeText(this@MainActivity,
-                        "We'll implement the search function in a bit",
-                        Toast.LENGTH_LONG)
-                        .show()
 
-                //showAddRecipeDialog()
+                showSearchRecipeDialog()
             }
             R.id.nav_fav -> {
                 startActivity(Intent(this@MainActivity, FavoritesActivity::class.java))
@@ -186,7 +181,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     this@MainActivity).recipeDao().insertRecipe(recipe)
             recipe.recipeId = recipeId
             runOnUiThread {
-                recipeAdapter.addRecipe(recipe)
+                searchAdapter.addRecipe(recipe)
             }
         }.start()
     }

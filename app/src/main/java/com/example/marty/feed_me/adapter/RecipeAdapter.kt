@@ -13,6 +13,7 @@ import com.example.marty.feed_me.touch.RecipeTouchHelperAdapter
 import kotlinx.android.synthetic.main.recipe_row.view.*
 import java.util.*
 
+
 class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouchHelperAdapter {
 
     var recipes = mutableListOf<Recipe>()
