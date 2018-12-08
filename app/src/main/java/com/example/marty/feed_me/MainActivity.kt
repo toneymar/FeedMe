@@ -90,6 +90,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this@MainActivity, "Connected", Toast.LENGTH_LONG).show()
                 val recipeResult = response.body()
 
+                searchResults.clear()
+
                 for(r in recipeResult?.recipes!!){
                     searchResults.add(r.title)
                 }
