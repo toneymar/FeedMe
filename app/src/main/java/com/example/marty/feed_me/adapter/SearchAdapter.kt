@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.marty.feed_me.R
+import com.example.marty.feed_me.data.SearchItem
 import kotlinx.android.synthetic.main.recipe_row.view.*
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
 
-    var recipes = mutableListOf<String?>()
+    var recipes = mutableListOf<SearchItem?>()
     val context : Context
 
     companion object {
@@ -22,7 +23,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
         val tvRecipe = itemView.tvRecipe
     }
 
-    constructor(context: Context, itemList: MutableList<String?>) : super() {
+    constructor(context: Context, itemList: MutableList<SearchItem?>) : super() {
         this.context = context
         this.recipes = itemList  //the constructor now receives all items from database
     }
@@ -43,7 +44,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>{
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = recipes[position]
 
-        holder.tvRecipe.text = item
+        holder.tvRecipe.text = item?.title
 
         holder.itemView.setOnClickListener{
             Toast.makeText(context,

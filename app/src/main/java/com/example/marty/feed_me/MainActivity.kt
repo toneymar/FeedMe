@@ -14,6 +14,7 @@ import com.example.marty.feed_me.adapter.SearchAdapter
 import com.example.marty.feed_me.data.AppDatabase
 import com.example.marty.feed_me.data.Recipe
 import com.example.marty.feed_me.data.RecipeResult
+import com.example.marty.feed_me.data.SearchItem
 import com.example.marty.feed_me.network.RecipeAPI
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecipeDialog.RecipeHandler {
 
     //Test array to see how the adapter works
-    var searchResults = mutableListOf<String?>()
+    var searchResults = mutableListOf<SearchItem?>()
 
     private val HOST_URL = "https://www.food2fork.com/api/"
     // API KEY: 64b4b6087380614360a164f1fc132f28
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 searchAdapter.deleteAll()
 
                 for(r in recipeResult?.recipes!!){
-                    searchResults.add(r.title)
+                    searchResults.add(r.title, r.image_url, r.source_url)
                 }
 
             }
@@ -169,4 +170,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun recipeCreated(recipe: Recipe) {
 
     }
+}
+
+private fun <E> MutableList<E>.add(title: String?, image_url: String?, source_url: String?) {
+
 }
