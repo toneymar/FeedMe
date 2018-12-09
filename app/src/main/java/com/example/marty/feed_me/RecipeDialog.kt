@@ -20,7 +20,7 @@ class RecipeDialog : DialogFragment() {
         super.onStart()
 
         val window = dialog.window
-        window.setBackgroundDrawableResource(R.color.ltGrey)
+        window.setBackgroundDrawableResource(R.color.MedTorquoise)
     }
 
     private lateinit var recipeHandler: RecipeHandler
@@ -39,7 +39,7 @@ class RecipeDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(getString(R.string.new_recipe))
+        builder.setTitle(" ")
 
         val rootView = requireActivity().layoutInflater.inflate(
                 R.layout.dialog_recipe, null)
