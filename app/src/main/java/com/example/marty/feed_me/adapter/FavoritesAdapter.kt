@@ -60,7 +60,7 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>, Reci
 
         Glide.with(context).load(item.recipePicURL).into(holder.ivPreview)
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             intentOpenURL(item.recipeURL)
         }
     }

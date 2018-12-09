@@ -20,6 +20,12 @@ import kotlinx.android.synthetic.main.recipe_row.view.*
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
+    interface ItemHandler {
+        fun addFavorite(item: Recipe)
+    }
+
+    private lateinit var itemHandler : ItemHandler
+
     var recipes = mutableListOf<SearchItem?>()
     val context: Context
 
@@ -67,7 +73,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
         holder.cbFavs.setOnClickListener {
             if (holder.cbFavs.isChecked) {
-                (context as FavoritesActivity).onAddFavorite(Recipe(
+                itemHandler.addFavorite(Recipe(
                         null, item?.title.toString(), item?.webURL.toString(), item?.picURL.toString(), true))
             }
             else {

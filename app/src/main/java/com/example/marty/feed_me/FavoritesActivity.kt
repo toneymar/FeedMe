@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import com.example.marty.feed_me.adapter.FavoritesAdapter
+import com.example.marty.feed_me.adapter.SearchAdapter
 import com.example.marty.feed_me.data.AppDatabase
 import com.example.marty.feed_me.data.Recipe
 import com.example.marty.feed_me.touch.RecipeTouchHelperCallback
 import kotlinx.android.synthetic.main.activity_favorites.*
 
-class FavoritesActivity : AppCompatActivity() {
+class FavoritesActivity : AppCompatActivity(), SearchAdapter.ItemHandler {
 
     private lateinit var favoritesAdapter: FavoritesAdapter
 
@@ -42,7 +43,7 @@ class FavoritesActivity : AppCompatActivity() {
         }.start()
     }
 
-    fun onAddFavorite(item : Recipe) {
+    override fun addFavorite(item: Recipe) {
         Thread {
             val id = AppDatabase.getInstance (
                     this@FavoritesActivity).recipeDao().insertRecipe(item)
@@ -53,5 +54,9 @@ class FavoritesActivity : AppCompatActivity() {
                 favoritesAdapter.addRecipe(item)
             }
         }.start()
+    }
+
+    fun onAddFavorite(item : Recipe) {
+
     }
 }
