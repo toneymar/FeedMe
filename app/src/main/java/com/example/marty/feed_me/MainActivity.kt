@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_about -> {
                 Toast.makeText(this@MainActivity,
-                        "Authors: Pratik Karki, Huseyin Altinisik, Marty Toney",
+                        "\tAuthors: \nPratik Karki, Huseyin Altinisik & \nMarty Toney",
                         Toast.LENGTH_LONG).show()
             }
             R.id.nav_logout -> {
