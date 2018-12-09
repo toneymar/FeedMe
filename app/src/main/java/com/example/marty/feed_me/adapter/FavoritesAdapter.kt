@@ -14,10 +14,10 @@ import kotlinx.android.synthetic.main.recipe_row.view.*
 import java.util.*
 
 
-class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouchHelperAdapter {
+class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>, RecipeTouchHelperAdapter {
 
-    var recipes = mutableListOf<Recipe>()
     val context : Context
+    var recipes = mutableListOf<Recipe>()
 
     companion object {
         val KEY_RECIPE_NAME = "KEY_RECIPE_NAME"
@@ -25,13 +25,15 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val tvRecipe = itemView.tvRecipe
-        val btnDelete = itemView.ivPreview
+        val cbFavs = itemView.cbFavs
+        val ivPreview = itemView.ivPreview
     }
 
     constructor(context: Context, itemList: List<Recipe>) : super() {
         this.context = context
-        this.recipes.addAll(itemList)  //the constructor now receives all items from database
+        recipes.addAll(itemList)  //the constructor now receives all items from database
     }
+
     constructor(context: Context) : super(){
         this.context = context
     }
@@ -42,20 +44,22 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>, RecipeTouc
         )
         return ViewHolder(view)
     }
+
     override fun getItemCount(): Int {
         return recipes.size
     }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = recipes[position]
 
         holder.tvRecipe.text = item.recipeName
-        holder.btnDelete.setOnClickListener{
-            deleteRecipe(holder.adapterPosition)
-        }
+        holder.cbFavs.isChecked = item.fvChecked
+
         holder.itemView.setOnClickListener{
 
         }
     }
+
     private fun deleteRecipe(adapterPosition: Int) {
         Thread {
             AppDatabase.getInstance(

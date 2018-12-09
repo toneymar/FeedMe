@@ -11,7 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.example.marty.feed_me.FavoritesActivity
+import com.example.marty.feed_me.MainActivity
 import com.example.marty.feed_me.R
+import com.example.marty.feed_me.data.Recipe
 import com.example.marty.feed_me.data.SearchItem
 import kotlinx.android.synthetic.main.recipe_row.view.*
 
@@ -27,6 +30,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvRecipe = itemView.tvRecipe
         val ivPreview = itemView.ivPreview
+        val cbFavs = itemView.cbFavs
     }
 
     constructor(context: Context, itemList: MutableList<SearchItem?>) : super() {
@@ -59,6 +63,16 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
         holder.itemView.setOnClickListener {
             intentOpenURL(item?.webURL)
+        }
+
+        holder.cbFavs.setOnClickListener {
+            if (holder.cbFavs.isChecked) {
+                (context as FavoritesActivity).onAddFavorite(Recipe(
+                        null, item?.title.toString(), item?.webURL.toString(), item?.picURL.toString(), true))
+            }
+            else {
+                //if in favorites -> remove
+            }
         }
     }
 
