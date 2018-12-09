@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.marty.feed_me.MainActivity
 import com.example.marty.feed_me.R
 import com.example.marty.feed_me.data.AppDatabase
@@ -56,6 +57,8 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>, Reci
 
         holder.tvRecipe.text = item.recipeName
         holder.cbFavs.isChecked = item.fvChecked
+
+        Glide.with(context).load(item.recipePicURL).into(holder.ivPreview)
 
         holder.itemView.setOnClickListener{
             intentOpenURL(item.recipeURL)
