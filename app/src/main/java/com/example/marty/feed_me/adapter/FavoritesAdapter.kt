@@ -93,6 +93,7 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>, Reci
         deleteRecipe(position)
         deleteAll()
     }
+
     override fun onItemMoved(fromPosition: Int, toPosition: Int) {
         Collections.swap(recipes, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
