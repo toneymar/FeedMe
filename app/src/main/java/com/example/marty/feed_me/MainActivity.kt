@@ -42,8 +42,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        //SEARCH_ITEM = "chicken"
-
         fab.setOnClickListener { view ->
             showSearchRecipeDialog()
         }
@@ -54,9 +52,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-
-        // Testing out the API call with this function
-        //showSearchResults("chicken")
     }
 
     private fun showSearchResults(recipe: String) {

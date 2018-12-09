@@ -68,8 +68,12 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
         holder.cbFavs.setOnClickListener {
             if (holder.cbFavs.isChecked) {
-                (context as FavoritesActivity).onAddFavorite(Recipe(
-                        null, item?.title.toString(), item?.webURL.toString(), item?.picURL.toString(), true))
+                 (context as FavoritesActivity).onAddFavorite(Recipe(
+                        null,
+                        item?.title.toString(),
+                        item?.webURL.toString(),
+                        item?.picURL.toString(),
+                        true))
             }
             else {
                 //if in favorites -> remove
