@@ -54,4 +54,5 @@ class FavoritesActivity : AppCompatActivity() {
             }
         }.start()
     }
+
 }
