@@ -66,7 +66,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
             intentOpenURL(item?.webURL)
         }
 
-        holder.cbFavs.setOnClickListener {
+/*        holder.cbFavs.setOnClickListener {
             if (holder.cbFavs.isChecked) {
 
                  (context as FavoritesActivity).onAddFavorite(Recipe(
@@ -79,7 +79,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
             else {
                 //if in favorites -> remove
             }
-        }
+        }*/
     }
 
     private fun intentOpenURL(webURL: String?) {

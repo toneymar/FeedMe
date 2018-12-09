@@ -20,7 +20,7 @@ class RecipeDialog : DialogFragment() {
         super.onStart()
 
         val window = dialog.window
-        window.setBackgroundDrawableResource(R.drawable.side_nav_bar)
+        window.setBackgroundDrawableResource(R.drawable.preview_image)
     }
 
     private lateinit var recipeHandler: RecipeHandler
