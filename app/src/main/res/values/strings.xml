@@ -14,4 +14,5 @@
     <string name="field_not_empty">This field can not be empty</string>
     <string name="search_for_a_recipe">Search For A Recipe</string>
     <string name="favorites">Favorites</string>
+    <string name="main_title">Search For A Recipe</string>
 </resources>
