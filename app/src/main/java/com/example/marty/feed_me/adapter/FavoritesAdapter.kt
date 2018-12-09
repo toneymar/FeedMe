@@ -1,6 +1,8 @@
 package com.example.marty.feed_me.adapter
 
+import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -56,8 +58,14 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>, Reci
         holder.cbFavs.isChecked = item.fvChecked
 
         holder.itemView.setOnClickListener{
-
+            intentOpenURL(item.recipeURL)
         }
+    }
+
+    private fun intentOpenURL(webURL: String?) {
+        val intentSearch = Intent(Intent.ACTION_WEB_SEARCH)
+        intentSearch.putExtra(SearchManager.QUERY, webURL)
+        context.startActivity(intentSearch)
     }
 
     private fun deleteRecipe(adapterPosition: Int) {
