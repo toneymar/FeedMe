@@ -68,6 +68,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
         holder.cbFavs.setOnClickListener {
             if (holder.cbFavs.isChecked) {
+
                  (context as FavoritesActivity).onAddFavorite(Recipe(
                         null,
                         item?.title.toString(),
