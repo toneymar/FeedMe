@@ -121,14 +121,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_clear -> {
-                //delete all from firebase
-
-                /*Thread {
-                    AppDatabase.getInstance(this@MainActivity).recipeDao().deleteAll()
-                    runOnUiThread {
-                        searchAdapter.deleteAll()
-                    }
-                }.start()*/
+                searchAdapter.deleteAll()
             }
         }
         return true

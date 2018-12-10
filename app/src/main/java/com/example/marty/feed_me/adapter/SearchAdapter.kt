@@ -94,7 +94,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
                 item?.picURL.toString()
         )
 
-        val favoritesCollection = FirebaseFirestore.getInstance().collection("favorites")
+        val favoritesCollection = FirebaseFirestore.getInstance().collection("favorites" + favorite.uid)
 
         favoritesCollection.add(favorite)
                 .addOnSuccessListener {

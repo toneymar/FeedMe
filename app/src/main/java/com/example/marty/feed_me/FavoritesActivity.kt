@@ -31,7 +31,7 @@ class FavoritesActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         val db = FirebaseFirestore.getInstance()
-        val postsCollection = db.collection("favorites")
+        val postsCollection = db.collection("favorites" + FirebaseAuth.getInstance().currentUser!!.uid)
 
         postsCollection.addSnapshotListener(object: EventListener<QuerySnapshot> {
             override fun onEvent(querySnapshot: QuerySnapshot?, p1: FirebaseFirestoreException?) {

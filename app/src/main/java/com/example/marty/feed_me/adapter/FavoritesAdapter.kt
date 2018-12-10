@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.marty.feed_me.R
 import com.example.marty.feed_me.data.Favorite
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.recipe_row.view.*
 
@@ -47,6 +48,10 @@ class FavoritesAdapter(var context: Context, var uid: String) : RecyclerView.Ada
 
         Glide.with(context).load(item.imageURL).into(holder.ivPreview)
 
+        holder.cbFavs.setOnClickListener {
+            removeFavorite(holder.adapterPosition)
+        }
+
         holder.itemView.setOnClickListener {
             intentOpenURL(item.recipeURL)
         }
@@ -70,7 +75,7 @@ class FavoritesAdapter(var context: Context, var uid: String) : RecyclerView.Ada
     }
 
     fun removeFavorite(position: Int) {
-        FirebaseFirestore.getInstance().collection("posts").document(
+        FirebaseFirestore.getInstance().collection("favorites" + uid).document(
                 keys[position]
         ).delete()
 
