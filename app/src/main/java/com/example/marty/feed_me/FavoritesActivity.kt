@@ -56,26 +56,5 @@ class FavoritesActivity : AppCompatActivity() {
                 }
             }
         })
-
-
-        /*    Thread {
-
-            //get values from firebase
-            val recipes = AppDatabase.getInstance(this).recipeDao().findAllRecipes()
-
-            favoritesAdapter = FavoritesAdapter(this@FavoritesActivity, recipes)
-
-            runOnUiThread {
-                rvFavorites.adapter = favoritesAdapter
-
-                runOnUiThread {
-                    rvFavorites.layoutManager = LinearLayoutManager(this@FavoritesActivity)
-                    rvFavorites.adapter = favoritesAdapter
-                    //val callback = RecipeTouchHelperCallback(favoritesAdapter)
-                    //val touchHelper = ItemTouchHelper(callback)
-                    //touchHelper.attachToRecyclerView(rvFavorites)
-                }
-            }
-        }.start()*/
     }
 }
