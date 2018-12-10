@@ -38,7 +38,7 @@ class RecipeDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(" ")
+        builder.setTitle("Search For a Recipe")
 
         val rootView = requireActivity().layoutInflater.inflate(
                 R.layout.dialog_recipe, null)
