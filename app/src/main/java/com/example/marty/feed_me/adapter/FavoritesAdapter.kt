@@ -67,9 +67,9 @@ class FavoritesAdapter(var context: Context, var uid: String) : RecyclerView.Ada
     }
 
     fun removeAllFavorites() {
-        /*for (i in 0 .. (keys.size - 2)){
-            removeFavorite(i)
-        }*/
+        for (i in 0 .. (keys.size - 1)){
+            removeFavorite(0)
+        }
     }
 
     fun addRecipe(item: Favorite, key: String) {

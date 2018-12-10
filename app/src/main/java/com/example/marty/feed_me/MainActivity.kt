@@ -119,7 +119,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_clear -> {
-                searchAdapter.deleteAll()
+                if (::searchAdapter.isInitialized){
+                    searchAdapter.deleteAll()
+                }
             }
         }
         return true

@@ -82,8 +82,8 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     }
 
     fun deleteAll() {
-        recipes.clear()
-        notifyDataSetChanged()
+            recipes.clear()
+            notifyDataSetChanged()
     }
 
     fun uploadFavorite(item: SearchItem?){
