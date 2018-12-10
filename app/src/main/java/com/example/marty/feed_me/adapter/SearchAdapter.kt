@@ -22,10 +22,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     var recipes = mutableListOf<SearchItem?>()
     val context: Context
 
-    companion object {
-        val KEY_RECIPE_NAME = "KEY_RECIPE_NAME"
-    }
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvRecipe = itemView.tvRecipe
         val ivPreview = itemView.ivPreview
@@ -55,22 +51,26 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = recipes[position]
 
-        holder.tvRecipe.text = item?.title
+        holder.tvRecipe.text = item!!.title
+        holder.cbFavs.isChecked = item.isFavorited
+
+        val httpsURL = item.picURL.toString().replaceRange(0, 4, "https")
+
         Glide.with(context)
-                .load(item?.picURL)
+                .load(httpsURL)
                 .into(holder.ivPreview)
 
         holder.itemView.setOnClickListener {
-            intentOpenURL(item?.webURL)
+            intentOpenURL(item.webURL)
         }
 
         holder.cbFavs.setOnClickListener {
             if (holder.cbFavs.isChecked) {
                 //upload to firebase
                 uploadFavorite(item)
-            }
-            else {
-                //if in favorites -> remove
+                item.isFavorited = true
+            } else {
+                item.isFavorited = false
             }
         }
     }
@@ -82,8 +82,8 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     }
 
     fun deleteAll() {
-        recipes.clear()
-        notifyDataSetChanged()
+            recipes.clear()
+            notifyDataSetChanged()
     }
 
     fun uploadFavorite(item: SearchItem?){

@@ -5,7 +5,6 @@ import android.support.v4.app.DialogFragment
 import android.widget.EditText
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.res.ColorStateList
 import android.os.Bundle
 import com.example.marty.feed_me.data.Favorite
 import kotlinx.android.synthetic.main.dialog_recipe.view.*
@@ -39,7 +38,7 @@ class RecipeDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(" ")
+        builder.setTitle("Search For a Recipe")
 
         val rootView = requireActivity().layoutInflater.inflate(
                 R.layout.dialog_recipe, null)

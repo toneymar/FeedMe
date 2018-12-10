@@ -6,11 +6,9 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.example.marty.feed_me.adapter.FavoritesAdapter
 import com.example.marty.feed_me.adapter.SearchAdapter
 import com.example.marty.feed_me.data.*
 import com.example.marty.feed_me.network.RecipeAPI
@@ -76,7 +74,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 searchAdapter.deleteAll()
 
                 for(r in recipeResult?.recipes!!){
-                    searchResults.add(SearchItem(r.title, r.image_url, r.source_url))
+                    searchResults.add(SearchItem(r.title, r.image_url, r.source_url, false))
                 }
 
             }
@@ -121,7 +119,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_clear -> {
-                searchAdapter.deleteAll()
+                if (::searchAdapter.isInitialized){
+                    searchAdapter.deleteAll()
+                }
             }
         }
         return true

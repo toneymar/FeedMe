@@ -7,7 +7,8 @@
 
     <EditText
         android:id="@+id/etRecipeText"
-        android:hint="@string/search_for_a_recipe"
+        android:hint="Enter Keyword"
+        android:inputType="textCapWords"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:layout_width="match_parent"

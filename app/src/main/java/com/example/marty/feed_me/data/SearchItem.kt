@@ -1,6 +1,12 @@
 package com.example.marty.feed_me.data
 
-class SearchItem(title : String?, picURL : String?, webURL : String?){
+data class SearchItem(var title : String?,
+                      var picURL : String?,
+                      var webURL : String?,
+                      var isFavorited : Boolean)
+
+
+/*class SearchItem(title : String?, picURL : String?, webURL : String?){
 
     var title : String?
     var picURL : String?
@@ -11,4 +17,4 @@ class SearchItem(title : String?, picURL : String?, webURL : String?){
         this.picURL = picURL
         this.webURL = webURL
     }
-}
+}*/
