@@ -8,37 +8,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.example.marty.feed_me.MainActivity
 import com.example.marty.feed_me.R
-import com.example.marty.feed_me.data.AppDatabase
-import com.example.marty.feed_me.data.Recipe
-import com.example.marty.feed_me.touch.RecipeTouchHelperAdapter
+import com.example.marty.feed_me.data.Favorite
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.recipe_row.view.*
-import java.util.*
 
 
-class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>, RecipeTouchHelperAdapter {
+class FavoritesAdapter(var context: Context, var uid: String) : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
 
-    val context : Context
-    var recipes = mutableListOf<Recipe>()
+    var favorites = mutableListOf<Favorite>()
+    var keys = mutableListOf<String>()
 
-    companion object {
-        val KEY_RECIPE_NAME = "KEY_RECIPE_NAME"
-    }
+    private var lastPosition = -1
 
-    inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvRecipe = itemView.tvRecipe
         val cbFavs = itemView.cbFavs
         val ivPreview = itemView.ivPreview
-    }
-
-    constructor(context: Context, itemList: List<Recipe>) : super() {
-        this.context = context
-        recipes.addAll(itemList)  //the constructor now receives all items from database
-    }
-
-    constructor(context: Context) : super(){
-        this.context = context
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
@@ -49,18 +36,23 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>, Reci
     }
 
     override fun getItemCount(): Int {
-        return recipes.size
+        return favorites.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = recipes[position]
+        val item = favorites[holder.adapterPosition]
 
+        //get values from firebase
         holder.tvRecipe.text = item.recipeName
-        holder.cbFavs.isChecked = item.fvChecked
+        holder.cbFavs.isChecked = true
 
-        Glide.with(context).load(item.recipePicURL).into(holder.ivPreview)
+        Glide.with(context).load(item.imageURL).into(holder.ivPreview)
 
-        holder.itemView.setOnClickListener{
+        holder.cbFavs.setOnClickListener {
+            removeFavorite(holder.adapterPosition)
+        }
+
+        holder.itemView.setOnClickListener {
             intentOpenURL(item.recipeURL)
         }
     }
@@ -71,35 +63,34 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>, Reci
         context.startActivity(intentSearch)
     }
 
-    private fun deleteRecipe(adapterPosition: Int) {
-        Thread {
-            AppDatabase.getInstance(
-                    context).recipeDao().deleteRecipe(recipes[adapterPosition])
-            recipes.removeAt(adapterPosition)
-            (context as MainActivity).runOnUiThread {
-                notifyItemRemoved(adapterPosition)
-            }
-        }.start()
+    fun deleteAll() {
+       /* recipes.clear()
+        notifyDataSetChanged()*/
     }
 
-    fun deleteAll() {
-        recipes.clear()
+    fun addRecipe(item: Favorite, key: String) {
+        favorites.add(item)
+        keys.add(key)
         notifyDataSetChanged()
     }
 
-    fun addRecipe(item: Recipe){
-        recipes.add(0, item)
-        notifyItemInserted(0)
+    fun removeFavorite(position: Int) {
+        FirebaseFirestore.getInstance().collection("favorites" + uid).document(
+                keys[position]
+        ).delete()
+
+        favorites.removeAt(position)
+        keys.removeAt(position)
+        notifyItemRemoved(position)
     }
 
-    override fun onDismiss(position: Int) {
-        deleteRecipe(position)
-        deleteAll()
-    }
-
-    override fun onItemMoved(fromPosition: Int, toPosition: Int) {
-        Collections.swap(recipes, fromPosition, toPosition)
-        notifyItemMoved(fromPosition, toPosition)
+    fun removeFavoriteByKey(key: String) {
+        val index = keys.indexOf(key)
+        if (index != -1) {
+            favorites.removeAt(index)
+            keys.removeAt(index)
+            notifyItemRemoved(index)
+        }
     }
 }
 

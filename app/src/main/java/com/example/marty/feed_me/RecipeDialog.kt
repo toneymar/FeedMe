@@ -7,13 +7,13 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.res.ColorStateList
 import android.os.Bundle
-import com.example.marty.feed_me.data.Recipe
+import com.example.marty.feed_me.data.Favorite
 import kotlinx.android.synthetic.main.dialog_recipe.view.*
 
 class RecipeDialog : DialogFragment() {
 
     interface RecipeHandler {
-        fun recipeCreated(recipe: Recipe)
+        fun recipeCreated(recipe: Favorite)
     }
 
     override fun onStart() {

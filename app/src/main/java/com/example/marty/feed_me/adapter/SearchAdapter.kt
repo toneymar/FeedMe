@@ -3,20 +3,18 @@ package com.example.marty.feed_me.adapter
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import android.provider.Settings.Global.getString
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.example.marty.feed_me.FavoritesActivity
 import com.example.marty.feed_me.MainActivity
 import com.example.marty.feed_me.R
-import com.example.marty.feed_me.data.AppDatabase
-import com.example.marty.feed_me.data.Recipe
+import com.example.marty.feed_me.data.Favorite
 import com.example.marty.feed_me.data.SearchItem
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.recipe_row.view.*
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
@@ -68,13 +66,8 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
         holder.cbFavs.setOnClickListener {
             if (holder.cbFavs.isChecked) {
-
-                 (context as FavoritesActivity).onAddFavorite(Recipe(
-                        null,
-                        item?.title.toString(),
-                        item?.webURL.toString(),
-                        item?.picURL.toString(),
-                        true))
+                //upload to firebase
+                uploadFavorite(item)
             }
             else {
                 //if in favorites -> remove
@@ -91,6 +84,26 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     fun deleteAll() {
         recipes.clear()
         notifyDataSetChanged()
+    }
+
+    fun uploadFavorite(item: SearchItem?){
+        val favorite = Favorite (
+                FirebaseAuth.getInstance().currentUser!!.uid,
+                item?.title.toString(),
+                item?.webURL.toString(),
+                item?.picURL.toString()
+        )
+
+        val favoritesCollection = FirebaseFirestore.getInstance().collection("favorites" + favorite.uid)
+
+        favoritesCollection.add(favorite)
+                .addOnSuccessListener {
+                    Toast.makeText(context as MainActivity, "Favorite Saved", Toast.LENGTH_LONG).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context as MainActivity, "Error ${it.message}", Toast.LENGTH_LONG).show()
+                }
+
     }
 }
 
