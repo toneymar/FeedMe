@@ -12,10 +12,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.example.marty.feed_me.adapter.FavoritesAdapter
 import com.example.marty.feed_me.adapter.SearchAdapter
-import com.example.marty.feed_me.data.AppDatabase
-import com.example.marty.feed_me.data.Recipe
-import com.example.marty.feed_me.data.RecipeResult
-import com.example.marty.feed_me.data.SearchItem
+import com.example.marty.feed_me.data.*
 import com.example.marty.feed_me.network.RecipeAPI
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
@@ -124,12 +121,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_clear -> {
-                Thread {
+                //delete all from firebase
+
+                /*Thread {
                     AppDatabase.getInstance(this@MainActivity).recipeDao().deleteAll()
                     runOnUiThread {
                         searchAdapter.deleteAll()
                     }
-                }.start()
+                }.start()*/
             }
         }
         return true
@@ -163,7 +162,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    override fun recipeCreated(recipe: Recipe) {
+    override fun recipeCreated(recipe: Favorite) {
 
     }
 }

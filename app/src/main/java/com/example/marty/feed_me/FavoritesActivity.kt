@@ -3,15 +3,14 @@ package com.example.marty.feed_me
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.helper.ItemTouchHelper
+import android.widget.Toast
 import com.example.marty.feed_me.adapter.FavoritesAdapter
-import com.example.marty.feed_me.adapter.SearchAdapter
-import com.example.marty.feed_me.data.AppDatabase
-import com.example.marty.feed_me.data.Recipe
-import com.example.marty.feed_me.touch.RecipeTouchHelperCallback
+import com.example.marty.feed_me.data.Favorite
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.activity_favorites.*
 
-class FavoritesActivity : AppCompatActivity(), SearchAdapter.ItemHandler {
+class FavoritesActivity : AppCompatActivity() {
 
     private lateinit var favoritesAdapter: FavoritesAdapter
 
@@ -19,11 +18,47 @@ class FavoritesActivity : AppCompatActivity(), SearchAdapter.ItemHandler {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
 
+        favoritesAdapter = FavoritesAdapter(this,
+                FirebaseAuth.getInstance().currentUser!!.uid)
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = true
+        rvFavorites.layoutManager = layoutManager
+        rvFavorites.adapter = favoritesAdapter
+
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
-        Thread {
+        val db = FirebaseFirestore.getInstance()
+        val postsCollection = db.collection("favorites")
+
+        postsCollection.addSnapshotListener(object: EventListener<QuerySnapshot> {
+            override fun onEvent(querySnapshot: QuerySnapshot?, p1: FirebaseFirestoreException?) {
+                if (p1 != null) {
+                    Toast.makeText(this@FavoritesActivity, "Error: ${p1.message}", Toast.LENGTH_LONG).show()
+                    return
+                }
+
+                for (docChange in querySnapshot!!.getDocumentChanges()) {
+                    when (docChange.type) {
+                        DocumentChange.Type.ADDED -> {
+                            val post = docChange.document.toObject(Favorite::class.java)
+                            favoritesAdapter.addRecipe(post, docChange.document.id)
+                        }
+                        DocumentChange.Type.MODIFIED -> {
+
+                        }
+                        DocumentChange.Type.REMOVED -> {
+                            favoritesAdapter.removeFavoriteByKey(docChange.document.id)
+                        }
+                    }
+                }
+            }
+        })
+
+
+        /*    Thread {
 
             //get values from firebase
             val recipes = AppDatabase.getInstance(this).recipeDao().findAllRecipes()
@@ -36,24 +71,11 @@ class FavoritesActivity : AppCompatActivity(), SearchAdapter.ItemHandler {
                 runOnUiThread {
                     rvFavorites.layoutManager = LinearLayoutManager(this@FavoritesActivity)
                     rvFavorites.adapter = favoritesAdapter
-                    val callback = RecipeTouchHelperCallback(favoritesAdapter)
-                    val touchHelper = ItemTouchHelper(callback)
-                    touchHelper.attachToRecyclerView(rvFavorites)
+                    //val callback = RecipeTouchHelperCallback(favoritesAdapter)
+                    //val touchHelper = ItemTouchHelper(callback)
+                    //touchHelper.attachToRecyclerView(rvFavorites)
                 }
             }
-        }.start()
-    }
-
-    override fun addFavorite(item: Recipe) {
-        Thread {
-            val id = AppDatabase.getInstance (
-                    this@FavoritesActivity).recipeDao().insertRecipe(item)
-
-            item.recipeId = id
-
-            runOnUiThread {
-                favoritesAdapter.addRecipe(item)
-            }
-        }.start()
+        }.start()*/
     }
 }
