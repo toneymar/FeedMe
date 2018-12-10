@@ -15,4 +15,5 @@
     <string name="search_for_a_recipe">Search For A Recipe</string>
     <string name="favorites">Favorites</string>
     <string name="main_title">Search For A Recipe</string>
+    <string name="clear_favorites">Clear Favorites</string>
 </resources>

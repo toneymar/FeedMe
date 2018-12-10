@@ -95,7 +95,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
         favoritesCollection.add(favorite)
                 .addOnSuccessListener {
-                    Toast.makeText(context as MainActivity, "Favorite Saved", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context as MainActivity, "Saved To Favorites", Toast.LENGTH_LONG).show()
                 }
                 .addOnFailureListener {
                     Toast.makeText(context as MainActivity, "Error ${it.message}", Toast.LENGTH_LONG).show()
