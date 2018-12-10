@@ -60,11 +60,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginLeft="44dp"
-        android:layout_marginBottom="14dp"
-        android:onClick="loginClick"
-        android:textColor="#FFFFFF"
+        android:layout_marginBottom="12dp"
         android:background="@color/Gold"
+        android:onClick="loginClick"
         android:text="Login"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -73,12 +73,12 @@
         android:layout_width="297dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
-        android:background="@color/Gold"
         android:layout_marginLeft="44dp"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="69dp"
+        android:layout_marginBottom="71dp"
+        android:background="@color/Gold"
         android:onClick="registerClick"
         android:text="Register"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
