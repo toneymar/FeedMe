@@ -74,15 +74,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
         holder.cbFavs.setOnClickListener {
             if (holder.cbFavs.isChecked) {
-                itemHandler.addFavorite(Recipe(
-                        null, item?.title.toString(), item?.webURL.toString(), item?.picURL.toString(), true))
-
-                 (context as FavoritesActivity).onAddFavorite(Recipe(
-                        null,
-                        item?.title.toString(),
-                        item?.webURL.toString(),
-                        item?.picURL.toString(),
-                        true))
+                //upload to firebase
             }
             else {
                 //if in favorites -> remove

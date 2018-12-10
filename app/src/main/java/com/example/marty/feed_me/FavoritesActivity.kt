@@ -25,6 +25,7 @@ class FavoritesActivity : AppCompatActivity(), SearchAdapter.ItemHandler {
     private fun initRecyclerView() {
         Thread {
 
+            //get values from firebase
             val recipes = AppDatabase.getInstance(this).recipeDao().findAllRecipes()
 
             favoritesAdapter = FavoritesAdapter(this@FavoritesActivity, recipes)
@@ -54,9 +55,5 @@ class FavoritesActivity : AppCompatActivity(), SearchAdapter.ItemHandler {
                 favoritesAdapter.addRecipe(item)
             }
         }.start()
-    }
-
-    fun onAddFavorite(item : Recipe) {
-
     }
 }

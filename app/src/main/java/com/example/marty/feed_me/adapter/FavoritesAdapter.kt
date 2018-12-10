@@ -55,6 +55,7 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>, Reci
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = recipes[position]
 
+        //get values from firebase
         holder.tvRecipe.text = item.recipeName
         holder.cbFavs.isChecked = item.fvChecked
 
@@ -72,6 +73,8 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>, Reci
     }
 
     private fun deleteRecipe(adapterPosition: Int) {
+
+        //delete from firebase
         Thread {
             AppDatabase.getInstance(
                     context).recipeDao().deleteRecipe(recipes[adapterPosition])
