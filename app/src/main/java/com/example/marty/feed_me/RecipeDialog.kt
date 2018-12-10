@@ -5,7 +5,6 @@ import android.support.v4.app.DialogFragment
 import android.widget.EditText
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.res.ColorStateList
 import android.os.Bundle
 import com.example.marty.feed_me.data.Favorite
 import kotlinx.android.synthetic.main.dialog_recipe.view.*

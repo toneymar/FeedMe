@@ -69,9 +69,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
                 //upload to firebase
                 uploadFavorite(item)
             }
-            else {
-                //if in favorites -> remove
-            }
         }
     }
 
