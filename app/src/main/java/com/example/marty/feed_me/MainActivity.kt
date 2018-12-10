@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 searchAdapter.deleteAll()
 
                 for(r in recipeResult?.recipes!!){
-                    searchResults.add(SearchItem(r.title, r.image_url, r.source_url))
+                    searchResults.add(SearchItem(r.title, r.image_url, r.source_url, false))
                 }
 
             }
