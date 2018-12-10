@@ -9,7 +9,7 @@
     tools:context=".FavoritesActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/fav_toolbar"
         app:title="Favorites"
         app:titleTextColor="#FFFF"
         android:layout_width="match_parent"

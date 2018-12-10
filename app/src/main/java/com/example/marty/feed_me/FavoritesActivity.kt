@@ -1,8 +1,12 @@
 package com.example.marty.feed_me
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import com.example.marty.feed_me.adapter.FavoritesAdapter
 import com.example.marty.feed_me.data.Favorite
@@ -17,6 +21,7 @@ class FavoritesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
+        setSupportActionBar(fav_toolbar)
 
         favoritesAdapter = FavoritesAdapter(this,
                 FirebaseAuth.getInstance().currentUser!!.uid)
@@ -56,26 +61,21 @@ class FavoritesActivity : AppCompatActivity() {
                 }
             }
         })
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.fav_menu, menu)
+        return true
+    }
 
-        /*    Thread {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-            //get values from firebase
-            val recipes = AppDatabase.getInstance(this).recipeDao().findAllRecipes()
-
-            favoritesAdapter = FavoritesAdapter(this@FavoritesActivity, recipes)
-
-            runOnUiThread {
-                rvFavorites.adapter = favoritesAdapter
-
-                runOnUiThread {
-                    rvFavorites.layoutManager = LinearLayoutManager(this@FavoritesActivity)
-                    rvFavorites.adapter = favoritesAdapter
-                    //val callback = RecipeTouchHelperCallback(favoritesAdapter)
-                    //val touchHelper = ItemTouchHelper(callback)
-                    //touchHelper.attachToRecyclerView(rvFavorites)
-                }
+        when (item.itemId) {
+            R.id.action_fav_clear-> {
+                //TODO: clear all faves in Firebase
             }
-        }.start()*/
+        }
+        return true
     }
 }
