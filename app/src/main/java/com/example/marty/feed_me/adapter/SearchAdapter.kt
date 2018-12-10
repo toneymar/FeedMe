@@ -76,6 +76,13 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
             if (holder.cbFavs.isChecked) {
                 itemHandler.addFavorite(Recipe(
                         null, item?.title.toString(), item?.webURL.toString(), item?.picURL.toString(), true))
+
+                 (context as FavoritesActivity).onAddFavorite(Recipe(
+                        null,
+                        item?.title.toString(),
+                        item?.webURL.toString(),
+                        item?.picURL.toString(),
+                        true))
             }
             else {
                 //if in favorites -> remove
