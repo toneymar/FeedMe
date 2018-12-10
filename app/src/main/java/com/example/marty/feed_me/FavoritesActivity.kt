@@ -74,6 +74,7 @@ class FavoritesActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_fav_clear-> {
                 //TODO: clear all faves in Firebase
+                favoritesAdapter.removeAllFavorites()
             }
         }
         return true

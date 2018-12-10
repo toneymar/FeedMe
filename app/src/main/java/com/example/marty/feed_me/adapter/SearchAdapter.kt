@@ -56,8 +56,11 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder> {
         val item = recipes[position]
 
         holder.tvRecipe.text = item?.title
+
+        val httpsURL = item?.picURL.toString().replaceRange(0, 4, "https")
+
         Glide.with(context)
-                .load(item?.picURL)
+                .load(httpsURL)
                 .into(holder.ivPreview)
 
         holder.itemView.setOnClickListener {

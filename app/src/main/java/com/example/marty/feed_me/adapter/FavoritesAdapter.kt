@@ -13,6 +13,7 @@ import com.example.marty.feed_me.data.Favorite
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.recipe_row.view.*
+import java.net.URI
 
 
 class FavoritesAdapter(var context: Context, var uid: String) : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
@@ -46,7 +47,9 @@ class FavoritesAdapter(var context: Context, var uid: String) : RecyclerView.Ada
         holder.tvRecipe.text = item.recipeName
         holder.cbFavs.isChecked = true
 
-        Glide.with(context).load(item.imageURL).into(holder.ivPreview)
+        val httpsURL = item.imageURL.replaceRange(0, 4, "https")
+
+        Glide.with(context).load(httpsURL).into(holder.ivPreview)
 
         holder.cbFavs.setOnClickListener {
             removeFavorite(holder.adapterPosition)
@@ -63,9 +66,10 @@ class FavoritesAdapter(var context: Context, var uid: String) : RecyclerView.Ada
         context.startActivity(intentSearch)
     }
 
-    fun deleteAll() {
-       /* recipes.clear()
-        notifyDataSetChanged()*/
+    fun removeAllFavorites() {
+        /*for (i in 0 .. (keys.size - 2)){
+            removeFavorite(i)
+        }*/
     }
 
     fun addRecipe(item: Favorite, key: String) {
