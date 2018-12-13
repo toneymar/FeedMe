@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fav_bg"
     tools:context=".FavoritesActivity">
 
     <android.support.v7.widget.Toolbar
