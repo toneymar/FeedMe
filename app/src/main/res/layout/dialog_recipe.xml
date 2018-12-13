@@ -7,7 +7,7 @@
 
     <EditText
         android:id="@+id/etRecipeText"
-        android:hint="Enter Keyword"
+        android:hint="@string/enter_keyword"
         android:inputType="textCapWords"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"

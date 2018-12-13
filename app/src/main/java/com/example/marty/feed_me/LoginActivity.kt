@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         ).addOnSuccessListener {
             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
         }.addOnFailureListener {
-            Toast.makeText(this@LoginActivity, "Login error ${it.message}", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@LoginActivity, "Login Error: ${it.message}", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -41,20 +41,20 @@ class LoginActivity : AppCompatActivity() {
                     UserProfileChangeRequest.Builder().
                             setDisplayName(userNameFromEmail(user.email!!)).build()
             )
-            Toast.makeText(this@LoginActivity, "Registration ok!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@LoginActivity, getString(R.string.registration_ok), Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
-            Toast.makeText(this@LoginActivity, "Register error ${it.message}", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@LoginActivity, "Register Error: ${it.message}", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun isFormValid(): Boolean {
         return when {
             etEmail.text.isEmpty() -> {
-                etEmail.error = "This field can not be empty"
+                etEmail.error = getString(R.string.empty_field)
                 false
             }
             etPassword.text.isEmpty() -> {
-                etPassword.error = "This field can not be empty"
+                etPassword.error = getString(R.string.empty_field)
                 false
             }
             else -> true

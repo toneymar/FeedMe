@@ -16,4 +16,16 @@
     <string name="favorites">Favorites</string>
     <string name="main_title">Search For A Recipe</string>
     <string name="clear_favorites">Clear Favorites</string>
+    <string name="view">VIEW</string>
+    <string name="builder_title">Search For a Recipe</string>
+    <string name="registration_ok">Registration OK!</string>
+    <string name="empty_field">This field can not be empty</string>
+    <string name="saved_favs">Saved To Favorites!</string>
+    <string name="textview">TextView</string>
+    <string name="enter_keyword">Enter Keyword</string>
+    <string name="email">email</string>
+    <string name="demo_gmail_com">demo@gmail.com</string>
+    <string name="password">password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
 </resources>

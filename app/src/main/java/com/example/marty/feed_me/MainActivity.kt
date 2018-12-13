@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_about -> {
                 Toast.makeText(this@MainActivity,
-                        "\tAuthors: \nPratik Karki, Huseyin Altinisik & \nMarty Toney",
+                        "\t\t\t\t\t\t\t\t\t\tAuthors: \nPratik Karki, Huseyin Altinisik \n\t\t\t\t\t\t\t\t& Marty Toney",
                         Toast.LENGTH_LONG).show()
             }
             R.id.nav_logout -> {
@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
             }
             R.id.nav_view -> {
-                Toast.makeText(this@MainActivity, "VIEW", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, getString(R.string.view), Toast.LENGTH_LONG).show()
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)
